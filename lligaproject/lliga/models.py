@@ -4,7 +4,7 @@ class Lliga(models.Model):
     nom = models.CharField(max_length=255)
     pais = models.CharField(max_length=255)
     temporada = models.CharField(max_length=255)
-    numero_d_equips = models.IntegerField()
+    numero_equips = models.IntegerField()
 
     def __str__(self):
         return self.nom
@@ -25,29 +25,28 @@ class Jugador(models.Model):
     edat = models.IntegerField()
     nacionalitat = models.CharField(max_length=255)
     equip = models.ForeignKey(Equip, on_delete=models.CASCADE, related_name='jugadors')
-    estadistiques = models.JSONField()
 
     def __str__(self):
         return self.nom
 
 class Partit(models.Model):
-    data = models.DateField()
-    equip_local = models.ForeignKey(Equip, on_delete=models.CASCADE, related_name='partits_locals')
-    equip_visitant = models.ForeignKey(Equip, on_delete=models.CASCADE, related_name='partits_visitants')
-    marcador = models.CharField(max_length=10)
-    estadi = models.CharField(max_length=255)
-    lliga = models.ForeignKey(Lliga, on_delete=models.CASCADE, related_name='partits')
-
+    class Meta:
+        unique_together = ["local","visitant","lliga"]
+    local = models.ForeignKey(Equip,on_delete=models.CASCADE,
+                    related_name="partits_local")
+    visitant = models.ForeignKey(Equip,on_delete=models.CASCADE,
+                    related_name="partits_visitant")
+    lliga = models.ForeignKey(Lliga,on_delete=models.CASCADE)
+    detalls = models.TextField(null=True,blank=True)
+    inici = models.DateTimeField(null=True,blank=True)
     def __str__(self):
-        return f'{self.equip_local} vs {self.equip_visitant} - {self.data}'
-    
+        return "{} - {}".format(self.local,self.visitant)
     def gols_local(self):
         return self.event_set.filter(
-            tipus=Event.EventType.GOL,equip=self.equip_local).count() 
-
+            tipus=Event.EventType.GOL,equip=self.local).count()
     def gols_visitant(self):
         return self.event_set.filter(
-            tipus=Event.EventType.GOL,equip=self.equip_visitant).count()  
+            tipus=Event.EventType.GOL,equip=self.visitant).count()
 
 class Event(models.Model):
     # el tipus d'event l'implementem amb algo tipus "enum"
