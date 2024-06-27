@@ -3,7 +3,7 @@ from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.views import generic
 
-from .models import Choice, Question
+from .models import Choice, Question, Vote
 
 # Create your views here.
 def IndexView(request):
@@ -38,8 +38,13 @@ def vote(request, question_id):
             },
         )
     else:
-        selected_choice.votes += 1
-        selected_choice.save()
+        #selected_choice.votes += 1
+        # selected_choice.save()
+
+        # crear el vote
+        vote = Vote(question=question, choice=selected_choice, ip="noip")
+        vote.save()
+
         # Always return an HttpResponseRedirect after successfully dealing
         # with POST data. This prevents data from being posted twice if a
         # user hits the Back button.

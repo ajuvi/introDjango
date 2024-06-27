@@ -1,7 +1,21 @@
+*{
+    font-family: Arial, sans-serif;    
+    font-size: 1em;
+}
+
 li a {
     color: green;
 }
 
+li a:hover {
+    color: darkgreen;
+}
+
 body {
     background: white url("images/background.jpg") no-repeat;
+}
+
+.titol {
+    font-size: 1.5em;
+    color:orange;
 }

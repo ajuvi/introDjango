@@ -2,7 +2,7 @@
 
 from django.contrib import admin
 
-from .models import Question, Choice, Vote
+from .models import *
 
 class ChoiceInline(admin.TabularInline):
     model = Choice
