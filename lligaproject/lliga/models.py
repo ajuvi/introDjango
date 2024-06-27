@@ -4,10 +4,15 @@ class Lliga(models.Model):
     nom = models.CharField(max_length=255)
     pais = models.CharField(max_length=255)
     temporada = models.CharField(max_length=255)
-    numero_equips = models.IntegerField()
+    data_inici = models.DateField()
+    data_final = models.DateField()    
 
     def __str__(self):
-        return self.nom
+        return f"{self.nom} {self.temporada}" 
+
+    @property
+    def numero_equips(self):
+        return self.equips.count()        
 
 class Equip(models.Model):
     nom = models.CharField(max_length=255)

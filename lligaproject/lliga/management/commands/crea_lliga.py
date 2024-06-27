@@ -21,7 +21,7 @@ class Command(BaseCommand):
             print("Aquesta lliga ja està creada. Posa un altre nom.")
             return
 
-        print("Creem la nova lliga: {}".format(titol_lliga))
+        print(f"Creem la nova lliga: {titol_lliga}")
         lliga = Lliga(  titol=titol_lliga,
                         inici=timezone.now(),
                         final=timezone.now()+timedelta(days=11*30))
