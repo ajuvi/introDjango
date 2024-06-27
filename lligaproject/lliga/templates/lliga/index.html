@@ -1,0 +1,16 @@
+{% extends "lliga/base.html" %}
+
+{% block content %}
+
+    {% if ctx_lligues %}
+        <ul>
+        {% for lliga in ctx_lligues %}
+        <li><a href="{% url 'lliga:classificacio' lliga.id %}">{{ lliga }}</a></li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No objects are available.</p>
+    {% endif %}
+
+{% endblock %}
+

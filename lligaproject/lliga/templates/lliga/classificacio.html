@@ -1,0 +1,24 @@
+{% extends "lliga/base.html" %}
+
+{% block title %}CLassificació{% endblock title %}
+
+{% block content %}
+
+    {% if ctx_classificacio %}
+        <ol>
+        {% for equip in ctx_classificacio %}
+            <li>{{equip.1}} ({{equip.0}} punts)</li>
+        {% endfor %}
+        </ol>
+    {% else %}
+        <p>No objects are available.</p>
+    {% endif %}
+
+    <div>
+        <p>
+            <a href="{% url 'lliga:index' %}">Return to polls</a>
+        </p>    
+    </div>  
+
+{% endblock %}
+

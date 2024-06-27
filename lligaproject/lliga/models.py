@@ -16,6 +16,7 @@ class Lliga(models.Model):
 
 class Equip(models.Model):
     nom = models.CharField(max_length=255)
+    ciutat = models.CharField(max_length=255)
     estadi = models.CharField(max_length=255)
     entrenador = models.CharField(max_length=255)
     any_fundacio = models.IntegerField()
@@ -44,11 +45,14 @@ class Partit(models.Model):
     lliga = models.ForeignKey(Lliga,on_delete=models.CASCADE)
     detalls = models.TextField(null=True,blank=True)
     inici = models.DateTimeField(null=True,blank=True)
+
     def __str__(self):
         return "{} - {}".format(self.local,self.visitant)
+
     def gols_local(self):
         return self.event_set.filter(
             tipus=Event.EventType.GOL,equip=self.local).count()
+
     def gols_visitant(self):
         return self.event_set.filter(
             tipus=Event.EventType.GOL,equip=self.visitant).count()
@@ -79,3 +83,7 @@ class Event(models.Model):
                     on_delete=models.SET_NULL,
                     related_name="events_rebuts")
     detalls = models.TextField(null=True,blank=True)
+
+
+    def __str__(self):
+        return f"{tipus} - {partit} - {jugador}"
