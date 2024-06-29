@@ -78,15 +78,18 @@ form legend {
 
 form input[type="submit"] {
     margin-top: 10px;
-    background-color: green;
+    background-color: green; /* Fondo más claro al pasar el mouse */
     color: white;
     border: none;
     padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
     width: 100%;
+    transition: border-color 0.3s, background-color 0.3s;
+    border: 2px solid green; /* Contorno inicial */
 }
 
-form-polls input[type="submit"]:hover {
-    background-color: darkgreen;
+form input[type="submit"]:hover {
+    background-color: lightgreen; /* Fondo más claro al pasar el mouse */
+    border-color: darkgreen; /* Contorno más oscuro al pasar el mouse */
 }
