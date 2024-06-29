@@ -1,3 +1,12 @@
+
+:root {
+    --ampada-pagina: 800px;
+
+    --gap1: 10px;
+    --gap2: 20px;
+    --gap3: 30px;
+}
+
 *{
     font-family: Arial, sans-serif;    
     font-size: 1em;
@@ -12,10 +21,72 @@ li a:hover {
 }
 
 body {
-    background: white url("images/background.jpg") no-repeat;
+    background: white url("images/background.jpg");
 }
-
+    
 .titol {
     font-size: 1.5em;
     color:orange;
+}
+
+.content {
+    max-width: var(--ampada-pagina);
+    margin: 0 auto;
+    padding: var(--gap2);
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+    background-color: #f9f9f9;
+    max-width:  var(--ampada-pagina);
+    margin: 0 auto;
+    margin-bottom: var(--gap2);
+    padding: var(--gap2);
+    box-shadow: 0 -1px 10px rgba(0, 0, 0, 0.1);
+}
+
+.footer {
+    background-color: #f9f9f9;
+    max-width: var(--ampada-pagina);
+    margin: 0 auto;
+    margin-top: var(--gap2);
+    padding: var(--gap2);
+    box-shadow: 0 -1px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Styles for form, legend, and fieldset */
+form {
+    padding: var(--gap2);
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+form fieldset {
+    border: 1px solid #ddd;
+    padding: var(--gap1);
+    border-radius: 5px;
+}
+
+form legend {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #333;
+    padding: 0 10px;
+}
+
+form input[type="submit"] {
+    margin-top: 10px;
+    background-color: green;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+}
+
+form-polls input[type="submit"]:hover {
+    background-color: darkgreen;
 }

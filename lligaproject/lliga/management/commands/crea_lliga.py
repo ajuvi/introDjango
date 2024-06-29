@@ -29,11 +29,12 @@ class Command(BaseCommand):
     def add_arguments(self, parser):
         parser.add_argument('nom_lliga', nargs=1, type=str)
 
-    def random_datetime(self,start, end):
+    def random_datetime(self, start, end):
         delta = end - start
         int_delta = int(delta.total_seconds())
         random_second = random.randrange(int_delta)
-        return start + timedelta(seconds=random_second)
+        naive_datetime = start + timedelta(seconds=random_second)
+        return timezone.make_aware(naive_datetime, timezone.get_current_timezone())
 
     def handle(self, *args, **options):
         nom_lliga = options['nom_lliga'][0]
@@ -102,7 +103,6 @@ class Command(BaseCommand):
 
                     # Crear events
                     print("Creem els events del partit")                    
-                    print("----------")
                     num_events=randint(5, 200)
                     for _ in range(num_events):
                         minutes_event = randint(0, 180)
