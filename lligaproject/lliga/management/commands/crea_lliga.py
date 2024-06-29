@@ -1,7 +1,7 @@
 from django.core.management.base import BaseCommand, CommandError
 from django.utils import timezone
 from faker import Faker
-from datetime import timedelta
+from datetime import timedelta, datetime
 from random import randint
 import random
  
@@ -28,6 +28,12 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument('nom_lliga', nargs=1, type=str)
+
+    def random_datetime(self,start, end):
+        delta = end - start
+        int_delta = int(delta.total_seconds())
+        random_second = random.randrange(int_delta)
+        return start + timedelta(seconds=random_second)
 
     def handle(self, *args, **options):
         nom_lliga = options['nom_lliga'][0]
@@ -87,10 +93,11 @@ class Command(BaseCommand):
         for local in lliga.equips.all():
             for visitant in lliga.equips.all():
                 if local!=visitant:
-                    partit = Partit(local=local,visitant=visitant)
-                    partit.local = local
-                    partit.visitant = visitant
-                    partit.lliga = lliga
+                    partit_inici = self.random_datetime(
+                        datetime.combine(lliga.data_inici, datetime.min.time()),
+                        datetime.combine(lliga.data_final, datetime.max.time())
+                    )
+                    partit = Partit(local=local, visitant=visitant, lliga=lliga, inici=partit_inici)
                     partit.save()
 
                     # Crear events
@@ -98,7 +105,8 @@ class Command(BaseCommand):
                     print("----------")
                     num_events=randint(5, 200)
                     for _ in range(num_events):
-                        temps_event = faker.date_time_between_dates(datetime_start=partit.inici, datetime_end=partit.inici + timedelta(minutes=180))
+                        minutes_event = randint(0, 180)
+                        temps_event = partit.inici + timedelta(minutes=minutes_event)
                         tipus_event = random.choice(data_events)
                         jugador_local = faker.random_element(elements=local.jugadors.all())
                         jugador_visitant = faker.random_element(elements=visitant.jugadors.all())
@@ -109,12 +117,15 @@ class Command(BaseCommand):
                         if random.random() < 0.5:
                             jugador1=jugador_visitant
                             jugador2=jugador_local                            
+                        
+                        if random.random() < 0.5:
+                            tipus_event = Event.EventType.GOL
 
                         event = Event(
                             partit=partit,
                             temps=temps_event,
                             tipus=tipus_event,
-                            jugador=jugador_local if faker.boolean(chance_of_getting_true=50) else jugador_visitant,
-                            equip=local if faker.boolean(chance_of_getting_true=50) else visitant,
-                            jugador2=jugador_visitant if tipus_event == Event.EventType.FALTA else None,
+                            jugador=jugador1,
+                            equip=jugador.equip,
+                            jugador2=jugador2,
                         )

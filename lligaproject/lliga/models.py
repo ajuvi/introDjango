@@ -10,9 +10,8 @@ class Lliga(models.Model):
     def __str__(self):
         return f"{self.nom} {self.temporada}" 
 
-    @property
     def numero_equips(self):
-        return self.equips.count()        
+        return self.equips.count()
 
 class Equip(models.Model):
     nom = models.CharField(max_length=255)
