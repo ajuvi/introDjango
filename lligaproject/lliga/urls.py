@@ -8,5 +8,6 @@ app_name = "lliga"
 
 urlpatterns = [
     path("", views.IndexView, name="index"),
+    path("menu", views.MenuView, name="menu"), 
     path("<int:lliga_id>/classificacio", views.ClassificacioView, name="classificacio"),    
 ]

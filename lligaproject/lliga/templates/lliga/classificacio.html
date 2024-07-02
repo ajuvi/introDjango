@@ -1,6 +1,6 @@
 {% extends "lliga/base.html" %}
 
-{% block title %}CLassificació{% endblock title %}
+{% block title %}<div class="titol">Classificació</div>  {% endblock title %}
 
 {% block content %}
 
@@ -16,9 +16,8 @@
 
     <div>
         <p>
-            <a href="{% url 'lliga:index' %}">Return to polls</a>
+            <a href="{% url 'lliga:index' %}">Return to Index</a>
         </p>    
     </div>  
 
 {% endblock %}
-
